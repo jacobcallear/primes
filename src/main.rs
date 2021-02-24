@@ -40,23 +40,19 @@ impl Iterator for Divisors {
     type Item = u64;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if self.minus {
+        let next_term = if self.minus {
             self.minus = false;
-            let next_term = 6 * self.n - 1;
-            if next_term <= self.max_divisor {
-                Some(next_term)
-            } else {
-                None
-            }
+            6 * self.n - 1
         } else {
             self.minus = true;
-            let next_term = 6 * self.n + 1;
             self.n += 1;
-            if next_term <= self.max_divisor {
-                Some(next_term)
-            } else {
-                None
-            }
+            6 * self.n + 1
+        };
+
+        if next_term <= self.max_divisor {
+            Some(next_term)
+        } else {
+            None
         }
     }
 }
