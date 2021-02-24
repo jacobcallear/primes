@@ -1,4 +1,4 @@
-pub fn is_prime(number: u64) -> bool {
+pub fn is_prime(number: u128) -> bool {
     match number {
         1 => false,
         2 | 3 => true,
@@ -15,16 +15,16 @@ pub fn is_prime(number: u64) -> bool {
 }
 
 struct Divisors {
-    max_divisor: u64,
+    max_divisor: u128,
     minus: bool,
-    n: u64,
+    n: u128,
     divisor: u32,
 }
 
 impl Divisors {
-    fn new(number: u64) -> Divisors {
+    fn new(number: u128) -> Divisors {
         Divisors {
-            max_divisor: (number as f64).sqrt() as u64 + 1,
+            max_divisor: (number as f64).sqrt() as u128 + 1,
             minus: true,
             n: 1,
             divisor: 2,
@@ -33,7 +33,7 @@ impl Divisors {
 }
 
 impl Iterator for Divisors {
-    type Item = u64;
+    type Item = u128;
 
     fn next(&mut self) -> Option<Self::Item> {
         if self.divisor == 2 {
