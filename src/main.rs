@@ -1,7 +1,9 @@
 fn main() {
-    println!("2: {}", is_prime(2));
-    println!("100: {}", is_prime(100));
-    println!("1000000000000: {}", is_prime(100000000000000000));
+    for i in 1..100 {
+        if is_prime(i) {
+            println!("{} is prime", i);
+        }
+    }
 }
 
 fn is_prime(number: u64) -> bool {
@@ -24,6 +26,7 @@ struct Divisors {
     max_divisor: u64,
     minus: bool,
     n: u64,
+    divisor: u32,
 }
 
 impl Divisors {
@@ -32,6 +35,7 @@ impl Divisors {
             max_divisor: (number as f64).sqrt() as u64 + 1,
             minus: true,
             n: 1,
+            divisor: 2,
         }
     }
 }
@@ -40,6 +44,13 @@ impl Iterator for Divisors {
     type Item = u64;
 
     fn next(&mut self) -> Option<Self::Item> {
+        if self.divisor == 2 {
+            self.divisor = 3;
+            return Some(2);
+        } else if self.divisor == 3 {
+            self.divisor = 4;
+            return Some(3);
+        };
         let next_term = if self.minus {
             self.minus = false;
             6 * self.n - 1
