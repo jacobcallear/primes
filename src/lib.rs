@@ -49,13 +49,41 @@ impl Iterator for Divisors {
         } else {
             self.minus = true;
             self.n += 1;
-            6 * self.n + 1
+            6 * (self.n - 1) + 1
         };
 
         if next_term <= self.max_divisor {
             Some(next_term)
         } else {
             None
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn divisors_generated_correctly() {
+        let expected_divisors = [2, 3, 5, 7, 11, 13, 17, 19, 23, 25, 29];
+        for (expected, actual) in expected_divisors.iter().zip(Divisors::new(100)) {
+            assert_eq!(expected, &actual);
+        }
+    }
+
+    #[test]
+    fn first_100_primes() {
+        let first_100_primes = [
+            2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61,
+            67, 71, 73, 79, 83, 89, 97
+        ];
+        let mut count_primes = 0;
+        for i in 1..=100 {
+            if is_prime(i) {
+                assert_eq!(first_100_primes[count_primes], i);
+                count_primes += 1;
+            }
         }
     }
 }
