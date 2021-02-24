@@ -1,3 +1,6 @@
+//! Check if a number is prime
+
+/// Checks if a number is prime
 pub fn is_prime(number: u128) -> bool {
     match number {
         1 => false,
@@ -14,11 +17,14 @@ pub fn is_prime(number: u128) -> bool {
     }
 }
 
+/// Iterator of divisors to test prime numbers with
+///
+/// Yields 2, 3, (6n-1), (6n+1), ... sqrt(number) for a given number
 struct Divisors {
     max_divisor: u128,
     minus: bool,
     n: u128,
-    divisor: u32,
+    two_or_three: Option<u32>,
 }
 
 impl Divisors {
@@ -27,7 +33,7 @@ impl Divisors {
             max_divisor: (number as f64).sqrt() as u128 + 1,
             minus: true,
             n: 1,
-            divisor: 2,
+            two_or_three: Some(2),
         }
     }
 }
@@ -36,13 +42,18 @@ impl Iterator for Divisors {
     type Item = u128;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if self.divisor == 2 {
-            self.divisor = 3;
-            return Some(2);
-        } else if self.divisor == 3 {
-            self.divisor = 4;
-            return Some(3);
-        };
+        // Return 2, then 3...
+        if let Some(x) = self.two_or_three {
+            if x == 2 {
+                self.two_or_three = Some(3);
+                return Some(2);
+            } else {
+                self.two_or_three = None;
+                return Some(3);
+            }
+        }
+        // Return (6n-1), (6n+1); n+=1...assert_eq!
+        // Until max_divisor reached
         let next_term = if self.minus {
             self.minus = false;
             6 * self.n - 1
