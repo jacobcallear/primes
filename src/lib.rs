@@ -21,7 +21,7 @@ pub fn parse_range() -> Result<RangeInclusive<u128>, &'static str> {
 /// Checks if a number is prime
 pub fn is_prime(number: u128) -> bool {
     match number {
-        1 => false,
+        0 | 1 => false,
         2 => true,
         _ => {
             let test_divisors = Divisors::new(number);
@@ -112,7 +112,7 @@ mod tests {
             67, 71, 73, 79, 83, 89, 97,
         ];
         let mut count_primes = 0;
-        for i in 1..=100 {
+        for i in 0..=100 {
             if is_prime(i) {
                 assert_eq!(first_100_primes[count_primes], i);
                 count_primes += 1;
