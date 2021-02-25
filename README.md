@@ -13,6 +13,20 @@ like this:
 ./primes <start_of_range_to_search> <end_of_range>
 ```
 
+
+## Installation
+
+1. Install [rust](https://www.rust-lang.org/tools/install)
+2. Clone or [download](https://github.com/jacobcallear/primes/archive/main.zip)
+   this repository
+3. Compile with the following shell command:
+
+   ```shell
+   cargo build --release
+   ```
+
+4. You now have the `primes` executable in *./target/release/*
+
 ## Examples
 
 - Find all prime numbers between 1 and 10:
