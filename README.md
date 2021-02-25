@@ -1,5 +1,7 @@
 # Primes
 
+![Cargo tests and lints status](https://github.com/jacobcallear/primes/actions/workflows/tests.yml/badge.svg)
+
 Find prime numbers in a given range.
 
 ## Usage
