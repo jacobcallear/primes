@@ -65,11 +65,11 @@ impl Iterator for Divisors {
             Some(2) => {
                 self.two_or_three = Some(3);
                 2
-            },
+            }
             Some(_) => {
                 self.two_or_three = None;
                 3
-            },
+            }
             // ...then (6n-1, 6n+1; n+=1)
             None => {
                 if self.minus {

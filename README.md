@@ -13,7 +13,6 @@ like this:
 ./primes <start_of_range_to_search> <end_of_range>
 ```
 
-
 ## Installation
 
 1. Install [rust](https://www.rust-lang.org/tools/install)
