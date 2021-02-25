@@ -1,5 +1,23 @@
 //! Check if a number is prime
 
+use std::env;
+use std::ops::RangeInclusive;
+
+/// Returns an inclusive range from command line arguments
+pub fn parse_range() -> Result<RangeInclusive<u128>, &'static str> {
+    let mut args = env::args();
+    args.next();
+    let start: u128 = match args.next() {
+        Some(string) => string.parse().unwrap(),
+        _ => return Err("Expected a positive whole number to test if prime"),
+    };
+    let end: u128 = match args.next() {
+        Some(string) => string.parse().unwrap(),
+        _ => start,
+    };
+    Ok(start..=end)
+}
+
 /// Checks if a number is prime
 pub fn is_prime(number: u128) -> bool {
     match number {

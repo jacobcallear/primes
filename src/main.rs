@@ -1,9 +1,14 @@
 use primes;
 
 fn main() {
-    for i in 1..100 {
+    let range = match primes::parse_range() {
+        Ok(range) => range,
+        Err(message) => panic!(message),
+    };
+
+    for i in range {
         if primes::is_prime(i) {
-            println!("{} is prime", i);
+            println!("{}", i);
         }
     }
 }
