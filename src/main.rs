@@ -1,5 +1,3 @@
-use primes;
-
 fn main() {
     let range = match primes::parse_range() {
         Ok(range) => range,
