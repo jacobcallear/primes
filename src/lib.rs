@@ -27,7 +27,7 @@ pub fn is_prime(number: u128) -> bool {
             let test_divisors = Divisors::new(number);
             for divisor in test_divisors {
                 if number % divisor == 0 {
-                    return false
+                    return false;
                 }
             }
             true
@@ -95,8 +95,9 @@ mod tests {
 
     #[test]
     fn divisors_generated_correctly() {
-        let expected_divisors = [2, 3, 5, 7, 11, 13, 17, 19, 23, 25, 29];
-        for (expected, actual) in expected_divisors.iter().zip(Divisors::new(100)) {
+        let expected_divisors = [2, 3, 5, 7, 11, 13, 17, 19, 23, 25, 29].iter();
+        let actual_divisors = Divisors::new(100);
+        for (expected, actual) in expected_divisors.zip(actual_divisors) {
             assert_eq!(expected, &actual);
         }
     }
@@ -105,7 +106,7 @@ mod tests {
     fn first_100_primes() {
         let first_100_primes = [
             2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61,
-            67, 71, 73, 79, 83, 89, 97
+            67, 71, 73, 79, 83, 89, 97,
         ];
         let mut count_primes = 0;
         for i in 1..=100 {
