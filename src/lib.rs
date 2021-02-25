@@ -22,7 +22,7 @@ pub fn parse_range() -> Result<RangeInclusive<u128>, &'static str> {
 pub fn is_prime(number: u128) -> bool {
     match number {
         1 => false,
-        2 | 3 => true,
+        2 => true,
         _ => {
             let test_divisors = Divisors::new(number);
             for divisor in test_divisors {
@@ -60,27 +60,30 @@ impl Iterator for Divisors {
     type Item = u128;
 
     fn next(&mut self) -> Option<Self::Item> {
-        // Return 2, then 3...
-        if let Some(x) = self.two_or_three {
-            if x == 2 {
+        let next_term = match self.two_or_three {
+            // Return 2, then 3...
+            Some(2) => {
                 self.two_or_three = Some(3);
-                return Some(2);
-            } else {
+                2
+            },
+            Some(_) => {
                 self.two_or_three = None;
-                return Some(3);
+                3
+            },
+            // ...then (6n-1, 6n+1; n+=1)
+            None => {
+                if self.minus {
+                    self.minus = false;
+                    6 * self.n - 1
+                } else {
+                    self.minus = true;
+                    self.n += 1;
+                    6 * (self.n - 1) + 1
+                }
             }
-        }
-        // Return (6n-1), (6n+1); n+=1...assert_eq!
-        // Until max_divisor reached
-        let next_term = if self.minus {
-            self.minus = false;
-            6 * self.n - 1
-        } else {
-            self.minus = true;
-            self.n += 1;
-            6 * (self.n - 1) + 1
         };
 
+        // Stop iteration when max_divisor reached
         if next_term <= self.max_divisor {
             Some(next_term)
         } else {
