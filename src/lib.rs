@@ -4,17 +4,27 @@ use std::env;
 use std::ops::RangeInclusive;
 
 /// Returns an inclusive range from command line arguments
-pub fn parse_range() -> Result<RangeInclusive<u128>, &'static str> {
-    let mut args = env::args();
+pub fn parse_range(
+    mut args: env::Args,
+) -> Result<RangeInclusive<u128>, &'static str> {
     args.next();
+
     let start: u128 = match args.next() {
-        Some(string) => string.parse().unwrap(),
-        _ => return Err("Expected a positive whole number to test if prime"),
+        Some(string) => match string.parse() {
+            Ok(num) => num,
+            _ => return Err("expected a positive whole number"),
+        },
+        _ => return Err("expected at least one positive whole number"),
     };
-    let end: u128 = match args.next() {
-        Some(string) => string.parse().unwrap(),
+
+    let end = match args.next() {
+        Some(string) => match string.parse() {
+            Ok(num) => num,
+            _ => return Err("expected a positive whole number"),
+        },
         _ => start,
     };
+
     Ok(start..=end)
 }
 
