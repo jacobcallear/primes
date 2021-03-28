@@ -29,6 +29,14 @@ pub fn parse_range(
 }
 
 /// Checks if a number is prime
+///
+/// ```
+/// use primes::is_prime;
+///
+/// assert_eq!(is_prime(2), true);
+/// assert_eq!(is_prime(100), false);
+/// assert_eq!(is_prime(483957312131), true);
+/// ```
 pub fn is_prime(number: u128) -> bool {
     match number {
         0 | 1 => false,
