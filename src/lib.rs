@@ -58,7 +58,7 @@ struct Divisors {
 impl Divisors {
     fn new(number: u128) -> Divisors {
         Divisors {
-            max_divisor: (number as f64).sqrt() as u128 + 1,
+            max_divisor: (number as f64).sqrt() as u128,
             minus: true,
             n: 1,
             two_or_three: Some(2),
@@ -108,25 +108,21 @@ mod tests {
 
     #[test]
     fn divisors_generated_correctly() {
-        let expected_divisors = [2, 3, 5, 7, 11, 13, 17, 19, 23, 25, 29].iter();
-        let actual_divisors = Divisors::new(100);
-        for (expected, actual) in expected_divisors.zip(actual_divisors) {
-            assert_eq!(expected, &actual);
-        }
+        let expected_divisors_for_100: Vec<u128> = vec![2, 3, 5, 7];
+        let actual_divisors_for_100: Vec<u128> = Divisors::new(100).collect();
+
+        assert_eq!(expected_divisors_for_100, actual_divisors_for_100);
     }
 
     #[test]
     fn first_100_primes() {
-        let first_100_primes = [
+        let expected_primes_below_100: Vec<u128> = vec![
             2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61,
             67, 71, 73, 79, 83, 89, 97,
         ];
-        let mut count_primes = 0;
-        for i in 0..=100 {
-            if is_prime(i) {
-                assert_eq!(first_100_primes[count_primes], i);
-                count_primes += 1;
-            }
-        }
+        let actual_primes_below_100: Vec<u128> =
+            (1..100).filter(|number| is_prime(*number)).collect();
+
+        assert_eq!(expected_primes_below_100, actual_primes_below_100);
     }
 }
