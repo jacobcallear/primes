@@ -41,15 +41,7 @@ pub fn is_prime(number: u128) -> bool {
     match number {
         0 | 1 => false,
         2 => true,
-        _ => {
-            let test_divisors = Divisors::new(number);
-            for divisor in test_divisors {
-                if number % divisor == 0 {
-                    return false;
-                }
-            }
-            true
-        }
+        _ => Divisors::new(number).all(|divisor| number % divisor != 0),
     }
 }
 
